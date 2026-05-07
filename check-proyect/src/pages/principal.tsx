@@ -5,6 +5,7 @@ function Principal() {
   return (
     <>
       <Header />
+
       <div className="container justify-content-center align-items-center d-flex flex-column">
         <div>
           <h2>Escanea el producto</h2>

@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/login";
 import App from "../App";
+import ProtectedRoute from "./ProtectedRoute";
+import BarCode from "../components/barCode";
 
 
 
@@ -13,8 +15,16 @@ export const router = createBrowserRouter([
 
     {
         path: "/login",
-        element: <Login />
+        element: (
+            <ProtectedRoute>
+                <Login />
+            </ProtectedRoute>
+        )
 
+    },
+    {
+        path: "/scaner",
+        element: <BarCode />
     },
     {
         path: "*",
