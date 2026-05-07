@@ -1,10 +1,11 @@
-import Header from "../components/header"
+import Header from "../components/header";
 
-function Login(){
 
-    return(
+function Login() {
+
+    return (
         <>
-            <Header/>
+            <Header />
             <div className="container">
                 <form action="">
                     <h2>Ingresar al Sistema</h2>
