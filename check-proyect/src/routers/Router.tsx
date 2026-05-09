@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import Login from "../pages/login";
+import Login from "../pages/Login";
 import App from "../App";
 import ProtectedRoute from "./ProtectedRoute";
-import BarCode from "../components/barCode";
-
+import Inventario from "../pages/Inventario";
+import Ajustes from "../pages/Ajustes";
+import Usarios from "../pages/Usarios";
 
 
 export const router = createBrowserRouter([
@@ -15,16 +16,32 @@ export const router = createBrowserRouter([
 
     {
         path: "/login",
-        element: (
-            <ProtectedRoute>
-                <Login />
-            </ProtectedRoute>
-        )
+        element: <Login />
 
     },
     {
-        path: "/scaner",
-        element: <BarCode />
+        path: "/inventario",
+        element:(
+            <ProtectedRoute>
+                <Inventario />
+            </ProtectedRoute>
+        )
+    },
+    {
+        path: "/ajustes",
+        element: (
+            <ProtectedRoute>
+                <Ajustes />
+            </ProtectedRoute>
+        )
+    },
+    {
+        path: "/usuarios",
+        element: (
+            <ProtectedRoute>
+                <Usarios />
+            </ProtectedRoute>
+        )
     },
     {
         path: "*",

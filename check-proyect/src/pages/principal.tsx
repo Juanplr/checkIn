@@ -1,7 +1,11 @@
-import Header from "../components/header";
+import { useState } from "react";
+import Header from "../components/Header";
 import codigoBarraIcon from '../assets/icons/barcorder.svg'
 import loginIcon from '../assets/icons/login.svg'
 function Principal() {
+
+  const [codigoBarras, setCodigoBarras] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <>
       <Header />
@@ -17,7 +21,11 @@ function Principal() {
           </button>
         </div>
         <div>
-          <a href="/login">Iniciar Sesión<img src={loginIcon} alt="Iniciar sesión" /></a>
+          {
+            !isLoggedIn && (
+              <a href="/login">Iniciar Sesión<img src={loginIcon} alt="Iniciar sesión" /></a>
+            )
+          }
         </div>
       </div>
     </>

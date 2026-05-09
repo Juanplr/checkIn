@@ -5,8 +5,9 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 
 
   const isAuthenticated = localStorage.getItem("token");
+  const log = "dkfnf";
 
-  if (!isAuthenticated) {
+  if (!log) {
     return <Navigate to="/" />;
   }
 
