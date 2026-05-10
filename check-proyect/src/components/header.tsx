@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import Usuario from '../models/Usuario';
 
 function Header() {
-    const usuario = new Usuario(1, "Juan", "juan123", true);
+    const usuario = new Usuario();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(usuario);
     return (

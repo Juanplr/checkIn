@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import codigoBarraIcon from '../assets/icons/barcorder.svg'
 import loginIcon from '../assets/icons/login.svg'
 function Principal() {
-
+  
   const [codigoBarras, setCodigoBarras] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
