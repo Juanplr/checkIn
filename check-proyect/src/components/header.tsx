@@ -4,13 +4,22 @@ import ajustesIcon from '../assets/icons/setings.svg'
 import inventarioIcon from '../assets/icons/inventory.svg'
 import usuariosIcon from '../assets/icons/users.svg'
 import barCodeIcon from '../assets/icons/barcorder.svg'
-import { Link } from 'react-router-dom'
-import Usuario from '../models/Usuario';
+import logoutIcon from '../assets/icons/logout.svg'
+import { Link, useNavigate } from 'react-router-dom'
+import { isAuthenticated, getUser, logout } from '../services/auth';
 
 function Header() {
-    const usuario = new Usuario();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(usuario);
+    const navigate = useNavigate();
+    const [loggedIn, setLoggedIn] = useState(isAuthenticated());
+    const [user, setUser] = useState(getUser());
+
+    function handleLogout() {
+        logout();
+        setLoggedIn(false);
+        setUser(null);
+        navigate("/");
+    }
+
     return (
         <>
             <header>
@@ -21,7 +30,7 @@ function Header() {
                         </div>
                         <div className='iconos col d-flex justify-content-between'>
                             {
-                                isLoggedIn && (
+                                loggedIn && (
                                     <>
                                         <Link to="/ajustes">
                                             <img className='button-icon' src={ajustesIcon} alt="Ajustes" />
@@ -41,11 +50,18 @@ function Header() {
                         </div>
                         <div className='usuario col d-flex justify-content-end'>
                             {
-                                isLoggedIn && (
+                                loggedIn ? (
                                     <>
                                         <img className="button-icon" src={userIcon} alt="Usuario" />
-                                        <p>{user.user_name}</p>
+                                        <p>{user?.sub || user?.user_name || ""}</p>
+                                        <button className="btn btn-link p-0 ms-2" onClick={handleLogout}>
+                                            <img className='button-icon' src={logoutIcon} alt="Cerrar sesión" />
+                                        </button>
                                     </>
+                                ) : (
+                                    <Link to="/login">
+                                        <img className="button-icon" src={userIcon} alt="Iniciar sesión" />
+                                    </Link>
                                 )
                             }
                         </div>

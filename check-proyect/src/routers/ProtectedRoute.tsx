@@ -1,14 +1,11 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
+import { isAuthenticated } from "../services/auth";
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
 
-
-  const isAuthenticated = localStorage.getItem("token");
-  const log = "dkfnf";
-
-  if (!log) {
-    return <Navigate to="/" />;
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" />;
   }
 
   return children;

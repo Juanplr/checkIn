@@ -1,13 +1,13 @@
 import Header from "../components/Header";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../services/auth";
 
 function Login() {
 
-    const api = import.meta.env.VITE_URL_API;
+    const navigate = useNavigate();
 
-    const ruta = `${api}/usuario/login`;
-
-    const [correo, setCorreo] = useState("");
+    const [username, setUsername] = useState("");
     const [contrasena, setContrasena] = useState("");
 
     async function handleClick(event: React.FormEvent) {
@@ -16,33 +16,17 @@ function Login() {
 
         try {
 
-            const response = await fetch(
-                `${ruta}/${correo}/${contrasena}`
-            );
+            await login(username, contrasena);
 
-            if (response.ok) {
+            alert("Inicio de sesión exitoso");
 
-                const data = await response.json();
-
-                console.log(data);
-
-                alert(
-                    data.nombre +
-                    " - Inicio de sesión exitoso"
-                );
-
-            } else {
-
-                console.error("Error al obtener los datos");
-
-                alert("Error al iniciar sesión");
-            }
+            navigate("/");
 
         } catch (error) {
 
             console.error(error);
 
-            alert("Error del servidor");
+            alert(error instanceof Error ? error.message : "Error del servidor");
         }
     }
 
@@ -59,20 +43,20 @@ function Login() {
                     <div className="mb-3">
 
                         <label
-                            htmlFor="email"
+                            htmlFor="username"
                             className="form-label"
                         >
-                            Correo Electrónico
+                            Nombre de Usuario
                         </label>
 
                         <input
-                            type="email"
+                            type="text"
                             className="form-control"
-                            id="email"
-                            placeholder="Ingresa tu correo electrónico"
-                            value={correo}
+                            id="username"
+                            placeholder="Ingresa tu nombre de usuario"
+                            value={username}
                             onChange={(e) =>
-                                setCorreo(e.target.value)
+                                setUsername(e.target.value)
                             }
                         />
                     </div>
@@ -106,8 +90,6 @@ function Login() {
                     </button>
 
                 </form>
-
-                <a href="">Registrarse</a>
 
             </div>
         </>

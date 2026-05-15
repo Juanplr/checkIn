@@ -2,10 +2,12 @@ import { useState } from "react";
 import Header from "../components/Header";
 import codigoBarraIcon from '../assets/icons/barcorder.svg'
 import loginIcon from '../assets/icons/login.svg'
+import { isAuthenticated } from "../services/auth";
 function Principal() {
-  
+
   const [codigoBarras, setCodigoBarras] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const loggedIn = isAuthenticated();
+
   return (
     <>
       <Header />
@@ -15,18 +17,19 @@ function Principal() {
           <h2>Escanea el producto</h2>
         </div>
         <div>
-          <input type="number" placeholder="Código de barras" min="0" />
+          <input type="number" placeholder="Código de barras" min="0"
+            value={codigoBarras}
+            onChange={(e) => setCodigoBarras(e.target.value)}
+          />
           <button className="btn btn-primary">
             <img className="button-icon" src={codigoBarraIcon} alt="Código de barras" />
           </button>
         </div>
-        <div>
-          {
-            !isLoggedIn && (
-              <a href="/login">Iniciar Sesión<img src={loginIcon} alt="Iniciar sesión" /></a>
-            )
-          }
-        </div>
+        {
+          !loggedIn && (
+            <a href="/login">Iniciar Sesión<img src={loginIcon} alt="Iniciar sesión" /></a>
+          )
+        }
       </div>
     </>
   );
