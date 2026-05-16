@@ -157,5 +157,7 @@ sketch
 skills
 AGENTS.md
 Dockerfile
-
+.opencode
+opencode.json
+pnpm-lock.yaml
 # End of https://www.toptal.com/developers/gitignore/api/react,node

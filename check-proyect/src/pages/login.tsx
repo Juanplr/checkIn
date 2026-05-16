@@ -18,15 +18,12 @@ function Login() {
 
             await login(username, contrasena);
 
-            alert("Inicio de sesión exitoso");
-
             navigate("/");
 
         } catch (error) {
 
             console.error(error);
 
-            alert(error instanceof Error ? error.message : "Error del servidor");
         }
     }
 

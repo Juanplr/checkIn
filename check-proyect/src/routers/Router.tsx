@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Inventario from "../pages/Inventario";
 import Ajustes from "../pages/Ajustes";
 import Usarios from "../pages/Usarios";
+import LoginProtecRouter from "./LoginProtecRouter";
 
 
 export const router = createBrowserRouter([
@@ -16,12 +17,16 @@ export const router = createBrowserRouter([
 
     {
         path: "/login",
-        element: <Login />
+        element: (
+            <LoginProtecRouter>
+                <Login />
+            </LoginProtecRouter>
+        )
 
     },
     {
         path: "/inventario",
-        element:(
+        element: (
             <ProtectedRoute>
                 <Inventario />
             </ProtectedRoute>
