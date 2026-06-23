@@ -5,7 +5,7 @@ import cameraIcon from '../assets/icons/camera.svg'
 import barcodeIcon from '../assets/icons/barcorder.svg'
 import loginIcon from '../assets/icons/login.svg'
 import { isAuthenticated } from "../services/auth";
-import { getProductoByBarcode} from "../services/producto";
+import { getProductoByBarcode } from "../services/producto";
 import type { Producto } from "../models/Producto";
 import ProductoCard from "../components/ProductoCard";
 
@@ -28,6 +28,15 @@ function Principal() {
     }
   }
 
+  async function buscarProductoAutomaticamente(key: string) {
+    if (key === "Enter") {
+      buscarProducto();
+    }
+    if (codigo.length >= 13) {
+      buscarProducto();
+    }
+  }
+
   async function buscarProducto(codigoBarras?: string) {
     const code = codigoBarras || codigo;
     if (!code) return;
@@ -42,6 +51,7 @@ function Principal() {
       setView("result");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error del servidor");
+      
       setView("idle");
     } finally {
       setLoading(false);
@@ -77,15 +87,8 @@ function Principal() {
             placeholder="Código de barras"
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && buscarProducto()}
-          />
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={() => buscarProducto()}
-            disabled={loading || !codigo}
-          >
-            <img className="button-icon" src={barcodeIcon} alt="Buscar" />
-          </button>
+            onKeyUp={(e) => buscarProductoAutomaticamente(e.key)}
+          /> 
           <button
             className="btn btn-secondary btn-lg"
             onClick={() => setView("scan")}

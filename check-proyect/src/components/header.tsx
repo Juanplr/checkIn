@@ -17,6 +17,7 @@ function Header() {
         logout();
         setLoggedIn(false);
         setUser(null);
+        window.location.reload();
         navigate("/");
     }
 
@@ -34,15 +35,19 @@ function Header() {
                                     <>
                                         <Link to="/ajustes">
                                             <img className='button-icon' src={ajustesIcon} alt="Ajustes" />
+                                            <p>Ajustes</p>
                                         </Link>
                                         <Link to="/inventario">
                                             <img className='button-icon' src={inventarioIcon} alt="Inventario" />
+                                            <p>Inventario</p>
                                         </Link>
                                         <Link to="/usuarios">
                                             <img className='button-icon' src={usuariosIcon} alt="Usuarios" />
+                                            <p>Usuarios</p>
                                         </Link>
                                         <Link to="/">
                                             <img className='button-icon' src={barCodeIcon} alt="Código de Barras" />
+                                            <p>Código de Barras</p>
                                         </Link>
                                     </>
                                 )
