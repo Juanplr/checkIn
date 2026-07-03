@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "../components/Header";
 import BarcodeScanner from "react-qr-barcode-scanner";
 import cameraIcon from '../assets/icons/camera.svg'
-import barcodeIcon from '../assets/icons/barcorder.svg'
 import loginIcon from '../assets/icons/login.svg'
 import { isAuthenticated } from "../services/auth";
 import { getProductoByBarcode } from "../services/producto";

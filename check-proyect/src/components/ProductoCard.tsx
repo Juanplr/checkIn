@@ -1,4 +1,5 @@
 import type { Producto } from "../models/Producto";
+import '../styles/productoCard.css'
 
 function formatearPrecio(precio: string) {
     const num = parseFloat(precio);
@@ -12,31 +13,29 @@ function ProductoCard({ producto, onReset }: { producto: Producto; onReset: () =
 
     return (
         <>
-            <div className="card w-100" style={{ maxWidth: 500, backgroundColor: "#1a1a2e", color: "#fff", border: "1px solid #e94560" }}>
+            <div className="producto-card card">
                 <div className="card-body">
                     <h3 className="card-title text-center mb-3">{producto.nombre}</h3>
-                    <table className="table table-borderless text-light mb-0">
+                    <table className="table table-borderless mb-0">
                         <tbody>
                             <tr>
-                                <td className="fw-bold" style={{ color: "#e94560" }}>Código</td>
+                                <td className="label">Código</td>
                                 <td className="text-end">{producto.codigo_de_barras}</td>
                             </tr>
                             {producto.nombre_categoria && (
                                 <tr>
-                                    <td className="fw-bold" style={{ color: "#e94560" }}>Categoría</td>
+                                    <td className="label">Categoría</td>
                                     <td className="text-end">{producto.nombre_categoria}</td>
                                 </tr>
                             )}
                             <tr>
-                                <td className="fw-bold" style={{ color: "#e94560" }}>Precio</td>
-                                <td className="text-end fs-4" style={{ color: "#4ecca3" }}>
-                                    {formatearPrecio(producto.precio)}
-                                </td>
+                                <td className="label">Precio</td>
+                                <td className="text-end precio">{formatearPrecio(producto.precio)}</td>
                             </tr>
                         </tbody>
                     </table>
                     <button
-                        className="btn btn-outline-light w-100 mt-3"
+                        className="btn-nueva-busqueda"
                         onClick={onReset}
                     >
                         Nueva búsqueda

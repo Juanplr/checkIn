@@ -5,6 +5,7 @@ import type { Categoria } from "../models/Categoria";
 import { getProductos, createProducto, updateProducto, deleteProducto, type ProductoCreate, type ProductoUpdate } from "../services/producto";
 import { getCategorias } from "../services/categoria";
 import { getUser } from "../services/auth";
+import "../styles/inventario.css"
 
 function Inventario() {
   const [productos, setProductos] = useState<Producto[]>([]);
@@ -98,33 +99,33 @@ function Inventario() {
       <Header />
       <div className="container py-4">
 
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h2 className="text-light mb-0">Inventario</h2>
-          <button className="btn btn-success" onClick={() => abrirModal()}>
+        <div className="d-flex justify-content-between align-items-center mb-3 inventario-header">
+          <h2>Inventario</h2>
+          <button className="btn-nuevo" onClick={() => abrirModal()}>
             + Nuevo Producto
           </button>
         </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="inventario-alert">{error}</div>}
 
         {loading ? (
           <div className="text-center py-5">
             <div className="spinner-border text-light" role="status" />
           </div>
         ) : productos.length === 0 ? (
-          <div className="text-center py-5 text-light">
-            <p className="fs-5">No hay productos registrados</p>
+          <div className="inventario-empty">
+            <p>No hay productos registrados</p>
           </div>
         ) : (
-          <div className="table-responsive">
-            <table className="table table-dark table-striped table-hover">
+          <div className="table-responsive inventario-table">
+            <table>
               <thead>
                 <tr>
                   <th>Código</th>
                   <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Precio</th>
-                  <th style={{ width: 140 }}>Acciones</th>
+                  <th className="col-acciones">Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -133,14 +134,16 @@ function Inventario() {
                     <td>{p.codigo_de_barras}</td>
                     <td>{p.nombre}</td>
                     <td>{p.nombre_categoria || "-"}</td>
-                    <td>{formatearPrecio(p.precio)}</td>
+                    <td className="precio">{formatearPrecio(p.precio)}</td>
                     <td>
-                      <button className="btn btn-warning btn-sm me-2" onClick={() => abrirModal(p)}>
-                        Editar
-                      </button>
-                      <button className="btn btn-danger btn-sm" onClick={() => eliminar(p.id, p.nombre)}>
-                        Eliminar
-                      </button>
+                      <div className="acciones-wrapper">
+                        <button className="btn-accion editar" onClick={() => abrirModal(p)}>
+                          Editar
+                        </button>
+                        <button className="btn-accion eliminar" onClick={() => eliminar(p.id, p.nombre)}>
+                          Eliminar
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -150,10 +153,10 @@ function Inventario() {
         )}
 
         {showModal && (
-          <div className="modal d-block" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}>
+          <div className="modal d-block inventario-modal-overlay">
             <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content" style={{ backgroundColor: "#1a1a2e", color: "#fff" }}>
-                <div className="modal-header border-secondary">
+              <div className="modal-content inventario-modal-content">
+                <div className="modal-header">
                   <h5 className="modal-title">{editando ? "Editar Producto" : "Nuevo Producto"}</h5>
                   <button className="btn-close btn-close-white" onClick={() => setShowModal(false)} />
                 </div>
@@ -184,9 +187,9 @@ function Inventario() {
                     </select>
                   </div>
                 </div>
-                <div className="modal-footer border-secondary">
-                  <button className="btn btn-secondary" onClick={() => setShowModal(false)}>Cancelar</button>
-                  <button className="btn btn-primary" onClick={guardar}>Guardar</button>
+                <div className="modal-footer">
+                  <button className="btn-cancelar" onClick={() => setShowModal(false)}>Cancelar</button>
+                  <button className="btn-guardar" onClick={guardar}>Guardar</button>
                 </div>
               </div>
             </div>

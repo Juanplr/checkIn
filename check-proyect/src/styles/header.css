@@ -1,0 +1,78 @@
+.header {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(233, 69, 96, 0.25);
+    margin-bottom: 0;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.nav-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #d5d8d7;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.nav-icon:hover {
+    color: #e94560;
+    background-color: rgba(233, 69, 96, 0.1);
+}
+
+.nav-icon.active {
+    color: #e94560;
+}
+
+.nav-icon .button-icon {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.2s ease;
+}
+
+.nav-icon:hover .button-icon {
+    transform: scale(1.15);
+}
+
+.nav-icon span {
+    font-size: 0.7rem;
+    margin-top: 4px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #d5d8d7;
+}
+
+.header-user p {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.header-user .btn-link {
+    text-decoration: none;
+    color: #d5d8d7;
+    transition: color 0.2s ease;
+}
+
+.header-user .btn-link:hover {
+    color: #e94560;
+}
+
+.header-user .button-icon {
+    width: 26px;
+    height: 26px;
+}
