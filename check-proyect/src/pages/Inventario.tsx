@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header";
 import type { Producto } from "../models/Producto";
 import type { Categoria } from "../models/Categoria";
@@ -8,6 +9,7 @@ import { getUser } from "../services/auth";
 import "../styles/inventario.css"
 
 function Inventario() {
+  const [searchParams] = useSearchParams();
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,14 @@ function Inventario() {
   useEffect(() => {
     cargarDatos();
   }, []);
+
+  useEffect(() => {
+    const codigoParam = searchParams.get("codigo");
+    if (codigoParam && categorias.length > 0) {
+      setForm({ nombre: "", codigo_de_barras: codigoParam, precio: "", id_categoria: categorias[0]?.id || 0 });
+      setShowModal(true);
+    }
+  }, [searchParams, categorias]);
 
   async function cargarDatos() {
     setLoading(true);

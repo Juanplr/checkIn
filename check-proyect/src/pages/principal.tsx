@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import BarcodeScanner from "react-qr-barcode-scanner";
 import cameraIcon from '../assets/icons/camera.svg'
@@ -7,15 +8,18 @@ import { isAuthenticated } from "../services/auth";
 import { getProductoByBarcode } from "../services/producto";
 import type { Producto } from "../models/Producto";
 import ProductoCard from "../components/ProductoCard";
+import ProductoNoEncontradoCard from "../components/ProductoNoEncontradoCard";
 
 type View = "scan" | "result" | "idle";
 
 function Principal() {
+  const navigate = useNavigate();
   const [codigo, setCodigo] = useState("");
   const [view, setView] = useState<View>("idle");
   const [producto, setProducto] = useState<Producto | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [productoNoEncontrado, setProductoNoEncontrado] = useState<string | null>(null);
   const loggedIn = isAuthenticated();
 
   function handleScan(err: unknown, result?: { getText: () => string } | null) {
@@ -24,6 +28,8 @@ function Principal() {
       setCodigo(code);
       setView("idle");
       buscarProducto(code);
+    } else {
+
     }
   }
 
@@ -43,15 +49,19 @@ function Principal() {
     setLoading(true);
     setError("");
     setProducto(null);
+    setProductoNoEncontrado(null);
 
     try {
       const data = await getProductoByBarcode(code);
       setProducto(data);
       setView("result");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Error del servidor");
-      
-      setView("idle");
+      if (e instanceof Error && e.message === "Producto no encontrado" && loggedIn) {
+        setProductoNoEncontrado(code);
+      } else {
+        setError(e instanceof Error ? e.message : "Error del servidor");
+        setView("idle");
+      }
     } finally {
       setLoading(false);
     }
@@ -87,7 +97,7 @@ function Principal() {
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
             onKeyUp={(e) => buscarProductoAutomaticamente(e.key)}
-          /> 
+          />
           <button
             className="btn btn-secondary btn-lg"
             onClick={() => setView("scan")}
@@ -112,7 +122,15 @@ function Principal() {
         {producto && view === "result" && (
           <ProductoCard
             producto={producto}
-            onReset={() => { setProducto(null); setView("idle"); setCodigo(""); }}
+            onReset={() => { setProducto(null); setView("idle"); setCodigo(""); setProductoNoEncontrado(null); }}
+          />
+        )}
+
+        {productoNoEncontrado && (
+          <ProductoNoEncontradoCard
+            codigo={productoNoEncontrado}
+            onAgregar={() => navigate(`/inventario?codigo=${encodeURIComponent(productoNoEncontrado)}`)}
+            onCancelar={() => { setProductoNoEncontrado(null); setError(""); setView("idle"); }}
           />
         )}
 
